@@ -1,81 +1,84 @@
-(function($) {
+;(function($) {
 
 	// Default options
-	var myOptions = {
+	var settings = {
 		numOfCol: 5,
-		offsetX: 5,
-		offsetY: 5,
-		element: 'li',
-		rowHeight: 30,
+		element: 'div',
+		rowGap: 25,
+		itemHeight: 20,
 	};
 	
 	//dynamic variable
 	var container, colwidth;
 	var rowCount = 0;
 	
-	//ie indexOf fix
-	if (!Array.prototype.indexOf) {
-		Array.prototype.indexOf = function(elt /*, from*/) {
-			var len = this.length >>> 0;
-
-			var from = Number(arguments[1]) || 0;
-			from = (from < 0) ? Math.ceil(from) : Math.floor(from);
-			if (from < 0)
-				from += len;
-
-				for (; from < len; from++) {
-					if (from in this &&
-					this[from] === elt)
-					return from;
-				}
-			return -1;
-		};
-	}
-	
-	var getPostion = function(index)
-	{
-		var x = index % myOptions.numOfCol;
+	var getStyle = function(index) {
+		var x = index % settings.numOfCol;
 		
 		// if the current row is odd we go right to left, so we
 		// substract the current X to the total number of rows
-		var position = {
-			x: rowCount % 2 ? myOptions.numOfCol - x - 1 : x,
+		var style = {
+			x: rowCount % 2 ? settings.numOfCol - x - 1 : x,
 			y: rowCount,
+			class: '',
 		};
 
-		// when we fill the whole row we move to the next one
-		if (x == (myOptions.numOfCol-1))
+		// when we fill the whole row we move to the next one and set the style
+		// on the items on the corners
+		if (x == (settings.numOfCol-1)) {
 			rowCount++;
+			style.class = style.y % 2 ? 'snaky-item-top-left' : 'snaky-item-top-right';
+		} else if (x === 0) {
+			style.class = style.y % 2 ? 'snaky-item-bottom-right' : 'snaky-item-bottom-left';
+		}
 		
-		return position;
+		return style;
 	}
 
-	var setPosition = function(obj, index) {
-		var pos = getPostion(index);
+	var setStyle = function(obj, index) {
+		var style = getStyle(index);
 		var itemWidth = colwidth - (obj.outerWidth() - obj.width());
 
 		obj.css({
 			'width': itemWidth,
-			'left': pos.x * colwidth,
-			'top': pos.y * myOptions.rowHeight,
-			'position': 'absolute'
+			'left': style.x * itemWidth,
+			'top': style.y * (settings.rowHeight + settings.itemHeight),
+			'height': settings.itemHeight,
 		});
-	}
-	
-	$.fn.snaky = function(options) {
-		if (options && typeof options === 'object') {
-			$.extend(myOptions, options);
-		}
-		
-		container = $(this);
-		colwidth = container.width() / myOptions.numOfCol;
 
-		container.children(myOptions.element).each(function(e) {
-			setPosition($(this), e);
-		});
-		
-		container.height((rowCount * myOptions.rowHeight)+20);
-		container.css('position', 'relative');
-		return this;
+		obj.addClass('snaky-item ' + style.class);
+	}
+
+	var methods = {
+		init: function(options) {
+			if (options && typeof options === 'object') {
+				$.extend(settings, options);
+			}
+			
+			this.addClass('snaky');
+			colwidth = this.width() / settings.numOfCol;
+			
+
+			this.children(settings.element).each(function(e) {
+				setStyle($(this), e);
+			});
+
+			this.height((rowCount * (settings.rowGap + settings.itemHeight)) + settings.rowGap);
+
+			return this;
+		},
+		destroy: function() {
+
+		},
+	};
+	
+	$.fn.snaky = function(method) {
+		if (methods[method]) {
+			return methods[method].apply(this, Array.prototype.slica.call(arguments, 1));
+		} else if (typeof method === 'object' || ! method) {
+			return methods.init.apply(this, arguments);
+		} else {
+			$.error('Method ' + method + ' does not exist on jQuery.snaky');
+		}
 	}
 })(jQuery);

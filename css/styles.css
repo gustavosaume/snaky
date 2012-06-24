@@ -1,51 +1,38 @@
-html {
-  font-size: 100%;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
+.snaky {
+  position: relative;
+  width: 900px;
 }
 
-body {
-  margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  line-height: 18px;
-  color: #333333;
-  background-color: #ffffff;
-}
-
-ul,
-ol {
-  padding: 0;
-  margin: 0 0 9px 25px;
-}
-
-ul {
-  list-style: disc;
-}
-
-li {
-  line-height: 18px;
-}
-
-#chains {
-  list-style: none;
-  margin: 12px;
-  overflow: auto;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.link {
+.snaky-item {
   text-align: center;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
   background: #999;
+  position: absolute;
 }
 
-.link:after {
+.snaky-item:after {
   content: attr(data-label);
+}
+
+.snaky-item:first-child {
+	background: blue;
+}
+
+.snaky-item:last-child {
+	background: red;
+}
+
+.snaky-item-top-right {
+	background: blue;
+}
+
+.snaky-item-bottom-right {
+	background: red;
+}
+
+.snaky-item-top-left {
+	background: yellow;
+}
+
+.snaky-item-bottom-left {
+	background: green;
 }

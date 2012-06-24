@@ -1,8 +1,9 @@
 /* Author:
 
 */
-$(document).ready(function(){
+$(window).load(function() {
 	$('#chains').snaky({
-        numOfCol: 21
+        numOfCol: 20,
+        rowHeight: 10,
     });
 });
