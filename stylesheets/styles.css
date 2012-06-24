@@ -1,0 +1,24 @@
+.snaky {
+  position: relative;
+  width: 100%;
+  text-shadow: none;
+  color: white;
+}
+
+.snaky-item {
+  text-align: center;
+  background: #999;
+  position: absolute;
+}
+
+.snaky-item:after {
+  content: attr(data-label);
+}
+
+.snaky-item-top-right,
+.snaky-item-bottom-right,
+.snaky-item-top-left,
+.snaky-item-bottom-left {
+	color: gray;
+	background: #FFF;
+}
