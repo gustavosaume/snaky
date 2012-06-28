@@ -4,6 +4,6 @@
 $(window).load(function() {
 	$('#chains').snaky({
         numOfCol: 20,
-        rowHeight: 10,
+        rowHeight: 10
     });
 });
