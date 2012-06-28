@@ -3,7 +3,7 @@
 */
 $(window).load(function() {
 	$('#chains').snaky({
-        numOfCol: 20,
-        rowHeight: 10,
+        numOfCol: 21,
+        rowHeight: 10
     });
 });
