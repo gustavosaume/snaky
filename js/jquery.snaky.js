@@ -5,11 +5,11 @@
 		numOfCol: 5,
 		element: 'div',
 		rowGap: 25,
-		itemHeight: 20,
+		itemHeight: 20
 	};
 	
 	//dynamic variable
-	var container, colwidth;
+	var container;
 	var rowCount = 0;
 	
 	var getStyle = function(index) {
@@ -20,7 +20,7 @@
 		var style = {
 			x: rowCount % 2 ? settings.numOfCol - x - 1 : x,
 			y: rowCount,
-			class: '',
+			class: ''
 		};
 
 		// when we fill the whole row we move to the next one and set the style
@@ -35,15 +35,14 @@
 		return style;
 	}
 
-	var setStyle = function(obj, index) {
+	var setStyle = function(obj, index, colwidth) {
 		var style = getStyle(index);
-		var itemWidth = colwidth - (obj.outerWidth() - obj.width());
-
+		
 		obj.css({
-			'width': itemWidth,
-			'left': style.x * itemWidth,
+			'width': colwidth,
+			'left': style.x * colwidth,
 			'top': style.y * (settings.rowHeight + settings.itemHeight),
-			'height': settings.itemHeight,
+			'height': settings.itemHeight
 		});
 
 		obj.addClass('snaky-item ' + style.class);
@@ -56,14 +55,15 @@
 			}
 			
 			this.addClass('snaky');
-			colwidth = this.width() / settings.numOfCol;
+			var colwidth = Math.round(this.width() / settings.numOfCol);
 			
 
 			this.children(settings.element).each(function(e) {
-				setStyle($(this), e);
+				setStyle($(this), e, colwidth);
 			});
 
 			this.height((rowCount * (settings.rowGap + settings.itemHeight)) + settings.rowGap);
+			this.width(colwidth * settings.numOfCol);
 
 			return this;
 		},
