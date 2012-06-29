@@ -2,8 +2,8 @@
 
 */
 $(window).load(function() {
-	$('#chains').snaky({
-        numOfCol: 20,
+	$('.snaky').snaky({
+        numOfCol: 21,
         rowHeight: 10
     });
 });
