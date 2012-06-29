@@ -3,7 +3,7 @@
 	// Default options
 	var settings = {
 		numOfCol: 5,
-		element: 'div',
+		element: 'li',
 		rowGap: 25,
 		itemHeight: 20
 	};
@@ -20,20 +20,20 @@
 		var style = {
 			x: rowCount % 2 ? settings.numOfCol - x - 1 : x,
 			y: rowCount,
-			class: ''
+			name: ''
 		};
 
 		// when we fill the whole row we move to the next one and set the style
 		// on the items on the corners
 		if (x == (settings.numOfCol-1)) {
 			rowCount++;
-			style.class = style.y % 2 ? 'snaky-item-top-left' : 'snaky-item-top-right';
+			style.name = style.y % 2 ? 'snaky-item-top-left' : 'snaky-item-top-right';
 		} else if (x === 0) {
-			style.class = style.y % 2 ? 'snaky-item-bottom-right' : 'snaky-item-bottom-left';
+			style.name = style.y % 2 ? 'snaky-item-bottom-right' : 'snaky-item-bottom-left';
 		}
 		
 		return style;
-	}
+	};
 
 	var setStyle = function(obj, index, colwidth) {
 		var style = getStyle(index);
@@ -45,8 +45,8 @@
 			'height': settings.itemHeight
 		});
 
-		obj.addClass('snaky-item ' + style.class);
-	}
+		obj.addClass('snaky-item ' + style.name);
+	};
 
 	var methods = {
 		init: function(options) {
@@ -69,7 +69,7 @@
 		},
 		destroy: function() {
 
-		},
+		}
 	};
 	
 	$.fn.snaky = function(method) {
@@ -80,5 +80,5 @@
 		} else {
 			$.error('Method ' + method + ' does not exist on jQuery.snaky');
 		}
-	}
+	};
 })(jQuery);
