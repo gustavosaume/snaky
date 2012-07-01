@@ -8,25 +8,21 @@
 		itemHeight: 20
 	};
 	
-	//dynamic variable
-	var container;
-	var rowCount = 0;
-	
 	var getStyle = function(index) {
 		var x = index % settings.numOfCol;
-		
+		var row = Math.floor(index / settings.numOfCol);
+
 		// if the current row is odd we go right to left, so we
 		// substract the current X to the total number of rows
 		var style = {
-			x: rowCount % 2 ? settings.numOfCol - x - 1 : x,
-			y: rowCount,
-			name: ''
+			x: row % 2 ? settings.numOfCol - x - 1 : x,
+            y: row,
+            name: ''
 		};
 
 		// when we fill the whole row we move to the next one and set the style
 		// on the items on the corners
 		if (x == (settings.numOfCol-1)) {
-			rowCount++;
 			style.name = style.y % 2 ? 'snaky-item-top-left' : 'snaky-item-top-right';
 		} else if (x === 0) {
 			style.name = style.y % 2 ? 'snaky-item-bottom-right' : 'snaky-item-bottom-left';
@@ -40,9 +36,9 @@
 		
 		obj.css({
 			'width': colwidth,
-			'left': style.x * colwidth,
-			'top': style.y * (settings.rowHeight + settings.itemHeight),
-			'height': settings.itemHeight
+            'left': style.x * colwidth,
+            'top': style.y * (settings.rowGap + settings.itemHeight),
+            'height': settings.itemHeight
 		});
 
 		obj.addClass('snaky-item ' + style.name);
@@ -54,16 +50,18 @@
 				$.extend(settings, options);
 			}
 			
-			this.addClass('snaky');
 			var colwidth = Math.round(this.width() / settings.numOfCol);
-			
 
 			this.children(settings.element).each(function(e) {
 				setStyle($(this), e, colwidth);
 			});
 
-			this.height((rowCount * (settings.rowGap + settings.itemHeight)) + settings.rowGap);
+			// set the main container dimensions
+			this.addClass('snaky');
+			this.height((Math.ceil(this.children(settings.element).length / settings.numOfCol) * (settings.rowGap + settings.itemHeight))-settings.rowGap);
 			this.width(colwidth * settings.numOfCol);
+
+			// update the corner styles
 
 			return this;
 		},
