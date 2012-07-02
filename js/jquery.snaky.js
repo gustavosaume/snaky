@@ -2,49 +2,44 @@
 
 	// Default options
 	var settings = {
-		numOfCol: 5,
+		numOfCol: 7,
 		element: 'li',
-		rowGap: 25,
-		itemHeight: 20
+		componentClass: 'snaky',
+		itemClass: 'snaky-item'
 	};
-	
-	//dynamic variable
-	var container;
-	var rowCount = 0;
 	
 	var getStyle = function(index) {
 		var x = index % settings.numOfCol;
-		
+		var row = Math.floor(index / settings.numOfCol);
+
 		// if the current row is odd we go right to left, so we
 		// substract the current X to the total number of rows
 		var style = {
-			x: x,
-			y: rowCount,
-			name: ''
+			x: row % 2 ? settings.numOfCol - x - 1 : x,
+            y: row,
+            name: settings.itemClass
 		};
 
 		// when we fill the whole row we move to the next one and set the style
 		// on the items on the corners
 		if (x == (settings.numOfCol-1)) {
-			rowCount++;
-			style.name = style.y % 2 ? 'snaky-item-top-left' : 'snaky-item-top-right';
+			style.name += style.y % 2 ? '-top-left' : '-top-right';
 		} else if (x === 0) {
-			style.name = style.y % 2 ? 'snaky-item-bottom-right' : 'snaky-item-bottom-left';
+			style.name += style.y % 2 ? '-bottom-right' : '-bottom-left';
 		}
 		
 		return style;
 	};
 
-	var setStyle = function(obj, index, colwidth) {
+	var setStyle = function(obj, index, colwidth, rowHeight) {
 		var style = getStyle(index);
 		
+		obj.addClass(style.name);
 		obj.css({
 			'width': colwidth,
-			'height': settings.itemHeight
+            'left': style.x * colwidth,
+            'top': style.y * rowHeight
 		});
-
-		var direction = style.y % 2 === 0 ? ' lefty' : ' righty';
-		obj.addClass('snaky-item ' + style.name + direction);
 	};
 
 	var methods = {
@@ -53,15 +48,19 @@
 				$.extend(settings, options);
 			}
 			
-			this.addClass('snaky');
+			this.addClass(settings.componentClass);
+			this.children().addClass(settings.itemClass);
+
 			var colwidth = Math.round(this.width() / settings.numOfCol);
-			
+			var rowGap = parseFloat($('.'+settings.itemClass).css('margin-bottom'));
+			var rowHeight = rowGap + parseFloat($('.'+settings.itemClass).css('height'));
 
 			this.children(settings.element).each(function(e) {
-				setStyle($(this), e, colwidth);
+				setStyle($(this), e, colwidth, rowHeight);
 			});
 
-			this.height((rowCount * (settings.rowGap + settings.itemHeight)) + settings.rowGap);
+			// set the main container dimensions
+			this.height((Math.ceil(this.children(settings.element).length / settings.numOfCol) * rowHeight)-rowGap);
 			this.width(colwidth * settings.numOfCol);
 
 			return this;

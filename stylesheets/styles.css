@@ -1,105 +1,92 @@
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
-  margin:0;
-  padding:0;
+	margin:0;
+	padding:0;
 }
 table {
-  border-collapse:collapse;
-  border-spacing:0;
+	border-collapse:collapse;
+	border-spacing:0;
 }
 fieldset,img { 
-  border:0;
+	border:0;
 }
 address,caption,cite,code,dfn,em,strong,th,var {
-  font-style:normal;
-  font-weight:normal;
+	font-style:normal;
+	font-weight:normal;
 }
 ol,ul {
-  list-style:none;
+	list-style:none;
 }
 caption,th {
-  text-align:left;
+	text-align:left;
 }
 h1,h2,h3,h4,h5,h6 {
-  font-size:100%;
-  font-weight:normal;
+	font-size:100%;
+	font-weight:normal;
 }
 q:before,q:after {
-  content:'';
+	content:'';
 }
 abbr,acronym { border:0;}
 
-ul li {
-  list-style: none;
-  padding: 0;
-}
 /*My styles*/
 
 .snaky {
   position: relative;
   margin: 50px 20px;
-    padding: 0;
-    font-size: 0;
+  padding: 0;
+  font-size: 0;
+
+  text-shadow: none;
+  color: white;
 }
 
 .snaky-item {
   text-align: center;
   background: #999;
-  position: relative;
-    font-size: 10px;
-    margin-bottom: 10px;
+  position: absolute;
+  padding: 0;
+  font-size: 10px;
+  margin-bottom: 10px;
+  height: 20px;
+
+  list-style: none;
 }
 
-.lefty {
-    float: left;
-}
-
-.righty {
-    float: right;            
-}
 .snaky-item:before {
   content: attr(data-label);
 }
 
 .snaky-item:first-child,
-.snaky-item:last-child {
-    background: red;
-}
-
+.snaky-item:last-child,
 .snaky-item-top-right,
-.snaky-item-bottom-right {
-    background: blue;
-}
-
-.snaky-item-top-right:after {
-    height: 10px;
-    width: 100%;
-    
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-
-    background: blue;
-    content: "";
-}
-
-.snaky-item-top-right:after {
-                   
-}
-
+.snaky-item-bottom-right,
+.snaky-item-top-right:after,
 .snaky-item-top-left,
-.snaky-item-bottom-left{
-    background: yellow;
-}
+.snaky-item-bottom-left, 
 .snaky-item-top-left:after {
-    height: 10px;
-    width: 100%;
-    
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-
-    background: yellow;
-    content: "";
+  background: #FFF;
+  color: gray;
 }
 
-​
+.snaky-item:last-child:after {
+  content: none;
+}
+
+.snaky-item-top-right:after,
+.snaky-item-top-left:after {
+  height: 10px; /* same as .snaky-item margin-bottom */
+  width: 20px; /* same as .snaky-item height */
+  
+  position: absolute;
+  bottom: -10px;
+
+  content: "";
+}
+
+.snaky-item-top-right:after {
+  right: 0;
+}
+
+.snaky-item-top-left:after {
+  left: 0;
+}
