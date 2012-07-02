@@ -2,10 +2,10 @@
 
 	// Default options
 	var settings = {
-		numOfCol: 5,
+		numOfCol: 7,
 		element: 'li',
-		rowGap: 25,
-		itemHeight: 20
+		componentClass: 'snaky',
+		itemClass: 'snaky-item'
 	};
 	
 	var getStyle = function(index) {
@@ -17,31 +17,29 @@
 		var style = {
 			x: row % 2 ? settings.numOfCol - x - 1 : x,
             y: row,
-            name: ''
+            name: settings.itemClass
 		};
 
 		// when we fill the whole row we move to the next one and set the style
 		// on the items on the corners
 		if (x == (settings.numOfCol-1)) {
-			style.name = style.y % 2 ? 'snaky-item-top-left' : 'snaky-item-top-right';
+			style.name += style.y % 2 ? '-top-left' : '-top-right';
 		} else if (x === 0) {
-			style.name = style.y % 2 ? 'snaky-item-bottom-right' : 'snaky-item-bottom-left';
+			style.name += style.y % 2 ? '-bottom-right' : '-bottom-left';
 		}
 		
 		return style;
 	};
 
-	var setStyle = function(obj, index, colwidth) {
+	var setStyle = function(obj, index, colwidth, rowHeight) {
 		var style = getStyle(index);
 		
+		obj.addClass(style.name);
 		obj.css({
 			'width': colwidth,
             'left': style.x * colwidth,
-            'top': style.y * (settings.rowGap + settings.itemHeight),
-            'height': settings.itemHeight
+            'top': style.y * rowHeight
 		});
-
-		obj.addClass('snaky-item ' + style.name);
 	};
 
 	var methods = {
@@ -50,18 +48,20 @@
 				$.extend(settings, options);
 			}
 			
+			this.addClass(settings.componentClass);
+			this.children().addClass(settings.itemClass);
+
 			var colwidth = Math.round(this.width() / settings.numOfCol);
+			var rowGap = parseFloat($('.'+settings.itemClass).css('margin-bottom'));
+			var rowHeight = rowGap + parseFloat($('.'+settings.itemClass).css('height'));
 
 			this.children(settings.element).each(function(e) {
-				setStyle($(this), e, colwidth);
+				setStyle($(this), e, colwidth, rowHeight);
 			});
 
 			// set the main container dimensions
-			this.addClass('snaky');
-			this.height((Math.ceil(this.children(settings.element).length / settings.numOfCol) * (settings.rowGap + settings.itemHeight))-settings.rowGap);
+			this.height((Math.ceil(this.children(settings.element).length / settings.numOfCol) * rowHeight)-rowGap);
 			this.width(colwidth * settings.numOfCol);
-
-			// update the corner styles
 
 			return this;
 		},
