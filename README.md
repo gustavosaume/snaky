@@ -42,14 +42,14 @@ We will have to do:
 And the component will reorder the li's in their proper position, with the following html as a result
 
 	<ul class="snaky" style="height: 290px; width: 732px; ">
-		<li data-label="01" class="snaky-item snaky-item-bottom-left" style="width: 183px; left: 0px; top: 0px; "></li>
+		<li data-label="01" class="snaky-item snaky-item-bottom snaky-item-left snaky-item-first" style="width: 183px; left: 0px; top: 0px; "></li>
 		<li data-label="02" class="snaky-item" style="width: 183px; left: 183px; top: 0px; "></li>
 		<li data-label="03" class="snaky-item" style="width: 183px; left: 366px; top: 0px; "></li>
-		<li data-label="04" class="snaky-item snaky-item-top-right" style="width: 183px; left: 549px; top: 0px; "></li>
-		<li data-label="05" class="snaky-item snaky-item-bottom-right" style="width: 183px; left: 549px; top: 30px; "></li>
+		<li data-label="04" class="snaky-item snaky-item-top snaky-item-right" style="width: 183px; left: 549px; top: 0px; "></li>
+		<li data-label="05" class="snaky-item snaky-item-bottom snaky-item-right" style="width: 183px; left: 549px; top: 30px; "></li>
 		<li data-label="06" class="snaky-item" style="width: 183px; left: 366px; top: 30px; "></li>
 		<li data-label="07" class="snaky-item" style="width: 183px; left: 183px; top: 30px; "></li>
-		<li data-label="08" class="snaky-item snaky-item-top-left" style="width: 183px; left: 0px; top: 30px; "></li>
+		<li data-label="08" class="snaky-item snaky-item-top snaky-item-left snaky-item-last" style="width: 183px; left: 0px; top: 30px; "></li>
     </ul>
 
 Additionally, the component reads the height and margin (bottom) attributes from their respective css classes.
