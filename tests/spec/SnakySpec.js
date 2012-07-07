@@ -56,31 +56,42 @@ describe("Snaky component", function() {
     });
 
     it("should have 7 columns", function() {
-      expect(component.find(".snaky-item:nth-child(7)").hasClass('snaky-item-top-right')).toBeTruthy();
+      expect(component.find(".snaky-item:nth-child(7)").is('.snaky-item-top, .snaky-item-right')).toBeTruthy();
       expect(component.find(".snaky-item:nth-child(14)").position().left).toBe(component.find(".snaky-item:nth-child(1)").position().left);
       expect(component.find(".snaky-item:nth-child(7)").position().left).toBe(component.find(".snaky-item:nth-child(8)").position().left);
     });
 
-    it("should have the top right items with snaky-item-top-right class", function() {
-      expect(component.find(".snaky-item.snaky-item-top-right").length).toBe(2);
-      expect($(component.find(".snaky-item.snaky-item-top-right")[0]).data('label')).toBe(7);
-      expect($(component.find(".snaky-item.snaky-item-top-right")[1]).data('label')).toBe(21);
+    it("should have one first item", function() {
+      expect(component.children(".snaky-item:first").hasClass("snaky-item-first")).toBeTruthy();
+      expect(component.children(".snaky-item:first").length).toBe(1);
+      expect(component.children(".snaky-item:first").data('label')).toBe(1);
     });
 
-    it("should have the top left items with snaky-item-top-left class", function() {
-      expect(component.find(".snaky-item.snaky-item-top-left").length).toBe(1);
-      expect($(component.find(".snaky-item.snaky-item-top-left")[0]).data('label')).toBe(14);
+    it("should have one last item", function() {
+      expect(component.children(".snaky-item:last").hasClass("snaky-item-last")).toBeTruthy();
+      expect(component.children(".snaky-item:last").length).toBe(1);
+      expect(component.children(".snaky-item:last").data('label')).toBe(21);
     });
 
-    it("should have the bottom right items with snaky-item-bottom-right class", function() {
-      expect(component.find(".snaky-item.snaky-item-bottom-right").length).toBe(1);
-      expect($(component.find(".snaky-item.snaky-item-bottom-right")[0]).data('label')).toBe(8);
+    it("should have the top right items with snaky-item-top and snaky-item-right class", function() {
+      expect(component.find(".snaky-item.snaky-item-top.snaky-item-right").length).toBe(2);
+      expect($(component.find(".snaky-item.snaky-item-top.snaky-item-right")[0]).data('label')).toBe(7);
+      expect($(component.find(".snaky-item.snaky-item-top.snaky-item-right")[1]).data('label')).toBe(21);
     });
 
-    it("should have the bottom left items with snaky-item-bottom-left class", function() {
-      expect(component.find(".snaky-item.snaky-item-bottom-left").length).toBe(2);
-      expect($(component.find(".snaky-item.snaky-item-bottom-left")[0]).data('label')).toBe(1);
-      expect($(component.find(".snaky-item.snaky-item-bottom-left")[1]).data('label')).toBe(15);
+    it("should have the top left items with snaky-item-top and snaky-item-left class", function() {
+      expect(component.find(".snaky-item.snaky-item-top.snaky-item-left").length).toBe(1);
+      expect($(component.find(".snaky-item.snaky-item-top.snaky-item-left")[0]).data('label')).toBe(14);
+    });
+
+    it("should have the bottom right items with snaky-item-bottom and snaky-item-right class", function() {
+      expect(component.find(".snaky-item.snaky-item-bottom.snaky-item-right").length).toBe(2);
+      expect($(component.find(".snaky-item.snaky-item-bottom.snaky-item-right")[1]).data('label')).toBe(15);
+    });
+
+    it("should have the bottom left items with snaky-item-bottom and snaky-item-left class", function() {
+      expect(component.find(".snaky-item.snaky-item-bottom.snaky-item-left").length).toBe(1);
+      expect($(component.find(".snaky-item.snaky-item-bottom.snaky-item-left")[0]).data('label')).toBe(8);
     });
   });
 
@@ -119,7 +130,7 @@ describe("Snaky component", function() {
     });
 
     it("should have 8 columns", function() {
-      expect(component.find(".snaky-item-class:nth-child(8)").hasClass('snaky-item-class-top-right')).toBeTruthy();
+      expect(component.find(".snaky-item-class:nth-child(8)").is('.snaky-item-class-top, .snaky-item-class-right')).toBeTruthy();
       expect(component.find(".snaky-item-class:nth-child(16)").position().left).toBe(component.find(".snaky-item-class:nth-child(1)").position().left);
     });
   });

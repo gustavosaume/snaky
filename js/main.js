@@ -3,7 +3,7 @@
 */
 $(window).load(function() {
 	$('.snaky').snaky({
-        numOfCol: 14,
+        numOfCol: 7,
         itemHeight: 20
     });
 });

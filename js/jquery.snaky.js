@@ -7,6 +7,9 @@
 		componentClass: 'snaky',
 		itemClass: 'snaky-item'
 	};
+
+	// styles classes
+	var leftStyle, rightStyle, topStyle, bottomStyle;
 	
 	var getStyle = function(index) {
 		var x = index % settings.numOfCol;
@@ -17,15 +20,15 @@
 		var style = {
 			x: row % 2 ? settings.numOfCol - x - 1 : x,
             y: row,
-            name: settings.itemClass
+            name: row % 2 ? leftStyle : rightStyle
 		};
 
 		// when we fill the whole row we move to the next one and set the style
 		// on the items on the corners
 		if (x == (settings.numOfCol-1)) {
-			style.name += style.y % 2 ? '-top-left' : '-top-right';
+			style.name += topStyle;
 		} else if (x === 0) {
-			style.name += style.y % 2 ? '-bottom-right' : '-bottom-left';
+			style.name += bottomStyle;
 		}
 		
 		return style;
@@ -48,8 +51,17 @@
 				$.extend(settings, options);
 			}
 			
+			// build the style classes
+			leftStyle = ' ' + settings.itemClass + '-left';
+			rightStyle = ' ' + settings.itemClass + '-right';
+			topStyle = ' ' + settings.itemClass + '-top';
+			bottomStyle = ' ' + settings.itemClass + '-bottom';
+
+			// set the base classes
 			this.addClass(settings.componentClass);
-			this.children().addClass(settings.itemClass);
+			this.children(settings.element).addClass(settings.itemClass);
+			this.children(settings.element+':first').addClass(settings.itemClass+'-first');
+			this.children(settings.element+':last').addClass(settings.itemClass+'-last');
 
 			var colwidth = Math.round(this.width() / settings.numOfCol);
 			var rowGap = parseFloat($('.'+settings.itemClass).css('margin-bottom'));
